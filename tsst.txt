@@ -1,1 +1,6 @@
-jha sfasdf ids fiads ò'a sfasdf
+Khởi tạo những model cơ bản
+Khóa chính và khóa ngoại
+inport cloudinary (avatar)
+Auth2 authentication
+Firebase
+Nghien cứu sử dụng ggmap
