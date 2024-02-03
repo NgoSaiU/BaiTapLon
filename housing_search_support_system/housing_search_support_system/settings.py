@@ -43,9 +43,33 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'houseapp.apps.HouseappConfig',
+    'rest_framework',
+    'cloudinary',
+    'drf_yasg',
+    'debug_toolbar',
+    'oauth2_provider',
+    'ckeditor',
+    'ckeditor_uploader',
+
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
+
 AUTH_USER_MODEL = 'houseapp.User'
 
+import cloudinary
+
+cloudinary.config(
+    cloud_name="du1qx5ncz",
+    api_key="687995837524325",
+    api_secret="3OC4yNGCram9-FeQ3Lzbaa5PYWI"
+)
+
+CKEDITOR_UPLOAD_PATH = "ckeditor/images/"
 
 DATABASES = {
     'default': {
@@ -65,7 +89,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
+
+# domain được sử dụng debug toolbar
+INTERNAL_IPS = [
+'127.0.0.1'
+]
+
 
 ROOT_URLCONF = 'housing_search_support_system.urls'
 
@@ -132,3 +164,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CLIENT_ID = 'GuF4LD714aaohymEjNxv4YUdx6eX83Eq81Te3aOU'
+CLIENT_SECRET = 'gVGbxelyaJEmfQtmzyXI1jJ294B9XeQCMiNkntFS9pMTDWYmcD7dMJqFwKA2bJcLDhcNOVSLm0fSarMlTkCjauFEccUzWJyBUmTzgyRtyVUYQopqGvw2GOYsTpHC0c9a'
+
