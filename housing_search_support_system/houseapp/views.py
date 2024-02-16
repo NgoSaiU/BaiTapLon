@@ -18,14 +18,15 @@ from django.shortcuts import get_object_or_404
 class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAPIView,
                   generics.ListAPIView, generics.CreateAPIView, generics.UpdateAPIView):
     queryset = Post.objects.all()
-    serializer_class = serializers.PostSerializer, generics.UpdateAPIView
-    permission_classes = [permissions.AllowAny]
+    serializer_class = serializers.PostSerializer
+    permission_classes = [permissions.AllowAny()]
 
     def get_permissions(self):
         if self.action in ['add_comment', 'favourite']:
             return [permissions.IsAuthenticated()]
 
         return self.permission_classes
+
     @action(methods=['post'], url_path='comments', detail=True)
     def add_comment(self, request, pk):
         c = Comment.objects.create(user=request.user, post=self.get_object(), content=request.data.get('content'))
@@ -102,8 +103,6 @@ class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateA
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = [perms.OwnerAuthenticated]
-
-
 
 
 

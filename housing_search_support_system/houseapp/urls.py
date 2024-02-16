@@ -15,8 +15,6 @@ router.register('users', views.UserViewSet, basename='users')
 router.register('comment', views.CommentViewSet, basename='comment')
 
 
-
-
 urlpatterns = [
     path('', include(router.urls))
 
