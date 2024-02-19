@@ -53,8 +53,24 @@ class Media(models.Model): #
     link = CloudinaryField('link', null=True)
     # avatar = CloudinaryField('avatar', null=True)
     postMotel = models.ForeignKey('Post', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.link:
+            self.link = self.link.save()
+        super().save(*args, **kwargs)
+
+    @property
+    def url(self):
+        return self.link.url
     def __str__(self):
-        return self.link
+        return str(self.url)
+
+    # def get_image_url(self):
+    #     return '{}{}'.format(settings.CLOUDINARY_ROOT_URL, self.image_field)
+
+    # def get_absolute_url(self):
+    #     return f"https://res.cloudinary.com/du1qx5ncz/{self.link}"
+
 
 # class Notification(ContentModel):
 #     pass

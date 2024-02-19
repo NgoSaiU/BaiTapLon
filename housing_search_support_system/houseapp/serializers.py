@@ -1,13 +1,20 @@
-from houseapp.models import User, Post, Comment, Tag
+from houseapp.models import User, Post, Comment, Tag, Media
 from rest_framework import serializers
 
 # làm CURD Post trước
 class PostSerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField('get_images')
     class Meta:
         model = Post
-        fields = ['title', 'price', 'address', 'numberOfPerson', 'user', 'tags']
+        fields = ['title', 'price', 'address', 'numberOfPerson', 'user', 'tags', 'images']
 
+    def get_images(self, obj):
+        return MediaSerializer(obj.media_set.all(), many=True).data
 
+class MediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Media
+        fields = ['link']
 class FavouritePostSerializer(PostSerializer):
     favourited = serializers.SerializerMethodField()
 

@@ -68,6 +68,9 @@ cloudinary.config(
     api_key="687995837524325",
     api_secret="3OC4yNGCram9-FeQ3Lzbaa5PYWI"
 )
+CLOUDINARY_URL = "https://res.cloudinary.com/du1qx5ncz//image/upload/"
+# CLOUDINARY_ROOT_URL= 'https://res.cloudinary.com/du1qx5ncz/'
+# CLOUDINARY_URL= 'https://res.cloudinary.com/du1qx5ncz/'
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/images/"
 
@@ -164,6 +167,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 
 CLIENT_ID = 'GuF4LD714aaohymEjNxv4YUdx6eX83Eq81Te3aOU'

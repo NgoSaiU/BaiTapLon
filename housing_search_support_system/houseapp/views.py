@@ -17,7 +17,8 @@ from django.shortcuts import get_object_or_404
 # viewsets.ModelViewSet là sẽ ra 6 API
 class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAPIView,
                   generics.ListAPIView, generics.CreateAPIView, generics.UpdateAPIView):
-    queryset = Post.objects.all()
+    # queryset = Post.objects.all()
+    queryset = Post.objects.prefetch_related('media_set').all()
     serializer_class = serializers.PostSerializer
     permission_classes = [permissions.AllowAny()]
 
