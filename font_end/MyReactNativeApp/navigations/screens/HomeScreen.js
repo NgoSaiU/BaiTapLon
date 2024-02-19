@@ -1,24 +1,20 @@
 import { Text, View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from 'react';
-import { endpoints } from "../../configs/API";
-
-
+import API, { endpoints } from "../../configs/API";
+import Post from "../../components/Post/Posts"
 
 const HomeScreen = ({ navigation }) => {
-
-    const [posts, setpost] = useState(null)
-
+    const [posts, setPost] = useState(null)
     useEffect(() => {
         const loadPosts = async () => {
             let url = endpoints['posts'];
-
             try {
                 let res = await API.get(url);
-                setCourses(res.data.results);
+                setPost(res.data);
                 console.log(res.data);
 
             } catch (ex) {
-                setCourses([]);
+                setPost([]);
                 console.error(ex);
             }
         };
@@ -26,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
     }, []);
 
     // trang này sẽ sử dụng cho việc hiển thị danh sách bài đăng
-    return ( 
+    return (
         <View style={styles.container}>
             <Text>DANH MỤC BÀI ĐĂNG THUÊ TRỌ</Text>
             <ScrollView>
@@ -37,6 +33,7 @@ const HomeScreen = ({ navigation }) => {
                                 <Text>{c.title}</Text>
                             </View>
                         ))
+                        
                     }
                 
                 </>}
@@ -45,9 +42,6 @@ const HomeScreen = ({ navigation }) => {
         </View>
     )
 }
-
-
-
 export default HomeScreen;
 const styles = StyleSheet.create({
     container: {

@@ -1,11 +1,18 @@
 import { Text, View, StyleSheet } from "react-native";
-import React from 'react';
+import React, { useReducer } from 'react';
+import MyUserReducer from "../../reducers/MyUserReducer";
+
 
 const NotificationScreen = ({ navigation }) => {
-
+    
+    const [user, dispatch] = useReducer(MyUserReducer, null);
     return (
         <View style={styles.container}>
-            <Text>Notification Screen</Text>
+            {user === null ? <>
+                <Text>Notification Screen</Text>
+            </> : <>
+                <Text>Chào {user.username}</Text>
+            </>}
         </View>
     )
 
