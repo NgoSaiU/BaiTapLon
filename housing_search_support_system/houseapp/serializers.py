@@ -1,3 +1,6 @@
+from urllib.parse import urljoin
+
+from cloudinary import config
 from houseapp.models import User, Post, Comment, Tag, Media
 from rest_framework import serializers
 
@@ -12,9 +15,17 @@ class PostSerializer(serializers.ModelSerializer):
         return MediaSerializer(obj.media_set.all(), many=True).data
 
 class MediaSerializer(serializers.ModelSerializer):
+    link = serializers.SerializerMethodField()
+
     class Meta:
         model = Media
         fields = ['link']
+    def get_link(self, obj):
+        if obj.link:
+            # return f"http://res.cloudinary.com/{'du1qx5ncz'}/{obj.avatar}"
+            return urljoin(f"http://res.cloudinary.com/{'du1qx5ncz'}/", str(obj.link))
+        return None
+
 class FavouritePostSerializer(PostSerializer):
     favourited = serializers.SerializerMethodField()
 
@@ -31,15 +42,35 @@ class FavouritePostSerializer(PostSerializer):
         fields = PostSerializer.Meta.fields + ['favourited']
 
 class UserSerialzier(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar']
+        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar', 'avatar_url']
         extra_kwargs = {
             'password': {
                 'write_only': True
         }
 
             }
+
+    def get_avatar_url(self, obj):
+        if obj.avatar:
+            # return f"http://res.cloudinary.com/{'du1qx5ncz'}/{obj.avatar}"
+            return urljoin(f"http://res.cloudinary.com/{'du1qx5ncz'}/", str(obj.avatar))
+        return None
+
+    # def get_avatar_url(self, obj):
+    #     if obj.avatar:
+    #         config(cloud_name=obj.avatar.public_id.split('/')[0])
+    #         return obj.avatar.url
+    #     return None
+
+    # def get_avatar_url(self, obj):
+    #     if obj.avatar:
+    #         cloud_name = obj.avatar.public_id.split('/')[1]
+    #         config(cloud_name=cloud_name)
+    #         return obj.avatar.url
+    #     return None
     def create(self, validated_data):
         data = validated_data.copy()
         user = User(**data)

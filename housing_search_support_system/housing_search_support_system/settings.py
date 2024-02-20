@@ -68,7 +68,8 @@ cloudinary.config(
     api_key="687995837524325",
     api_secret="3OC4yNGCram9-FeQ3Lzbaa5PYWI"
 )
-CLOUDINARY_URL = "https://res.cloudinary.com/du1qx5ncz//image/upload/"
+# CLOUDINARY_URL = "https://res.cloudinary.com/du1qx5ncz/image/upload/"
+CLOUDINARY_URL = "cloudinary://687995837524325:3OC4yNGCram9-FeQ3Lzbaa5PYWI@du1qx5ncz"
 # CLOUDINARY_ROOT_URL= 'https://res.cloudinary.com/du1qx5ncz/'
 # CLOUDINARY_URL= 'https://res.cloudinary.com/du1qx5ncz/'
 

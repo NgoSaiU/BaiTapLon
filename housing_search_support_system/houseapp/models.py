@@ -59,6 +59,8 @@ class Media(models.Model): #
             self.link = self.link.save()
         super().save(*args, **kwargs)
 
+
+
     @property
     def url(self):
         return self.link.url

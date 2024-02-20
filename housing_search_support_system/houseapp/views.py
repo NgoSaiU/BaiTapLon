@@ -1,4 +1,5 @@
 # from django.shortcuts import render
+from cloudinary.auth_token import generate
 from rest_framework import viewsets, generics, parsers, permissions, status
 from houseapp import serializers
 from houseapp import perms
@@ -44,7 +45,7 @@ class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAP
                         status=status.HTTP_200_OK)
 
 
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView):
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView, generics.ListAPIView):
     queryset = User.objects.filter(is_active=True).all()
     serializer_class = serializers.UserSerialzier
     parser_classes = [parsers.MultiPartParser]
