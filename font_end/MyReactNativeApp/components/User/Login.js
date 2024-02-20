@@ -29,14 +29,15 @@ const Login = ({ navigation }) => {
             let res = await API.post(endpoints['login'], {
                 "username": username,
                 "password": password,
-                "client_id": "iaL2868ctytxIToJHDkm9S39lCRPa2gJ12j9kaxh",
-                "client_secret": "TGMSVnIsFGzoOKB4bg5Fyt65E8C2fQaA0gyuBixSDKRaB9RrhhLdC2Zr6oxnmgdEs1lPF8wYRpJ3xokEabE1pSBNH0JTsFrBqpn58nJ7BcMkw6akEKLh4TTIHOXGcQEx",
+                "client_id": "HmwZ6eFN7iLeSl3pmqqoilgrRPk4HD1tembFrIat",
+                "client_secret": "8CwdW0dMU4sTYgOnQj20RIzIv8Ch0zsXlvsstT0KHHCgq9xyQmj3WyZMPQF3tTwXrmVMgTSOvxp0fRcY0OuaJ1df10IIMHRLInYrBf4tCOhPAxNEWrRr8p78gglqVDI0",
                 "grant_type": "password"
             });
-            
+            // let res = await API.post(endpoints['posts']);
             console.info(res.data);
         } catch (e) {
             console.error(e);
+            console.info("Lỗi rồi ông ơi")
         } finally {
             setLoading(false);
         }

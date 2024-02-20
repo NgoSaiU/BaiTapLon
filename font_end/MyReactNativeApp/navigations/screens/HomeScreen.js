@@ -5,13 +5,16 @@ import Post from "../../components/Post/Posts"
 
 const HomeScreen = ({ navigation }) => {
     const [posts, setPost] = useState(null)
+
     useEffect(() => {
         const loadPosts = async () => {
-            let url = endpoints['posts'];
+            const url = "https://ngosaiustudent.pythonanywhere.com/posts/"
+            
+            // let url = endpoints['posts'];
             try {
                 let res = await API.get(url);
                 setPost(res.data);
-                console.log(res.data);
+                console.info(res.data.images);
 
             } catch (ex) {
                 setPost([]);
@@ -32,12 +35,9 @@ const HomeScreen = ({ navigation }) => {
                             <View  key={c.id}>
                                 <Text>{c.title}</Text>
                             </View>
-                        ))
-                        
+                        )) 
                     }
-                
                 </>}
-
             </ScrollView>
         </View>
     )

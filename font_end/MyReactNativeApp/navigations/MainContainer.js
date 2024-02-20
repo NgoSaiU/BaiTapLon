@@ -14,7 +14,7 @@ import FavoriteScreen from './screens/FavouriteScreen'
 import InfoUserScreen from './screens/InfoUserScreen'
 import NotificationScreen from './screens/NotificationScreen'
 import MyContext from '../configs/MyContext';
-import MyUserReducer from '../reducers/MyUserReducer';
+import MyUserReducer from '../reducers/MyUserReducer'; 
 
 const homeName = 'Home';
 const favoriteName = 'Favourite';
@@ -28,8 +28,6 @@ const MainContainer = () => {
     const [user, dispatch] = useReducer(MyUserReducer, null);
     return (
         <MyContext.Provider value={[user, dispatch]}>
-
-
             <NavigationContainer>
                 <Tab.Navigator
                     initialRouteName={homeName}
@@ -48,9 +46,7 @@ const MainContainer = () => {
                             } else if (rn === notificationName) {
                                 iconName = focused ? 'notifications' : 'notifications-outline';
                             }
-
                             return <Ionicons name={iconName} size={size} color={color} />;
-
                         },
                     })}
                     tabBarOptions={{
