@@ -54,13 +54,6 @@ class Media(models.Model): #
     # avatar = CloudinaryField('avatar', null=True)
     postMotel = models.ForeignKey('Post', on_delete=models.CASCADE)
 
-    def save(self, *args, **kwargs):
-        if self.link:
-            self.link = self.link.save()
-        super().save(*args, **kwargs)
-
-
-
     @property
     def url(self):
         return self.link.url
