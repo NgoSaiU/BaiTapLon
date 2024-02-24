@@ -1,6 +1,6 @@
 from _ast import Name
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from cloudinary.models import CloudinaryField
 from ckeditor.fields import RichTextField
 # Create your models here.
@@ -10,10 +10,46 @@ class User(AbstractUser):
 
     avatar = CloudinaryField('avatar', null=True)
 
+    class Role(models.TextChoices):
+        ADMIN = "ADMIN", 'Admin'
+        CUSTOMER = "CUSTOMER", 'Customer'
+        LANDLORD = "LANDLORD", 'Landlord'
+
+    base_role = Role.CUSTOMER
+    role = models.CharField(max_length=50, choices=Role.choices, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
+
+class CustomerManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.STUDENT)
+class Customer(User):
+    base_role = User.Role.CUSTOMER
+    customer = CustomerManager()
+    class Meta:
+        proxy = True
+        abstract = True
+class LandlordManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.LANDLORD)
+class Landlor(User):
+    base_role = User.Role.LANDLORD
+    landlors = LandlordManager()
+    class Meta:
+        proxy = True
+        abstract = True
+
+
 class BaseModel(models.Model):
     created_date = models.DateField(auto_now_add=True, null=True)
     updated_date = models.DateField(auto_now=True, null=True)
     active = models.BooleanField(default=True)
+
     class Meta:
         abstract = True
 
@@ -30,13 +66,17 @@ class Chat(ContentModel):
 
 
 class Post(BaseModel):
+    # thộc tính price phải là string
+    # thêm thuộc tính số điện thoại
     title = models.CharField(max_length=255, null=False)
     description = RichTextField(null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     address = models.CharField(max_length=255, null=False)
     numberOfPerson = models.SmallIntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag')
+    local = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)
+
 
     def __str__(self):
         return self.title

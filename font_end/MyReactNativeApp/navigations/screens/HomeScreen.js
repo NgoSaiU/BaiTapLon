@@ -1,20 +1,21 @@
-import { Text, View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { Text, View, StyleSheet, ScrollView, ActivityIndicator, Image } from "react-native";
 import React, { useEffect, useState } from 'react';
 import API, { endpoints } from "../../configs/API";
-import Post from "../../components/Post/Posts"
+
+import Posts from "../../components/Post/Posts";
 
 const HomeScreen = ({ navigation }) => {
     const [posts, setPost] = useState(null)
 
     useEffect(() => {
         const loadPosts = async () => {
-            const url = "https://ngosaiustudent.pythonanywhere.com/posts/"
-            
-            // let url = endpoints['posts'];
+            // const url = "https://ngosaiustudent.pythonanywhere.com/posts/"
+
+            let url = endpoints['posts'];
             try {
                 let res = await API.get(url);
-                setPost(res.data);
-                console.info(res.data.images);
+                setPost(res.data.results);
+                console.info(res.data.results);
 
             } catch (ex) {
                 setPost([]);
@@ -24,18 +25,17 @@ const HomeScreen = ({ navigation }) => {
         loadPosts();
     }, []);
 
-    // trang này sẽ sử dụng cho việc hiển thị danh sách bài đăng
     return (
         <View style={styles.container}>
             <Text>DANH MỤC BÀI ĐĂNG THUÊ TRỌ</Text>
             <ScrollView>
-                {posts === null ? <ActivityIndicator/> : <>
+                {posts === null ? <ActivityIndicator /> : <>
                     {
-                        posts.map(c => (
-                            <View  key={c.id}>
-                                <Text>{c.title}</Text>
-                            </View>
-                        )) 
+                        posts.map(p => {
+                            return (
+                                <Posts posts={p} navigation={navigation} />
+                                )
+                        })
                     }
                 </>}
             </ScrollView>

@@ -15,11 +15,17 @@ import InfoUserScreen from './screens/InfoUserScreen'
 import NotificationScreen from './screens/NotificationScreen'
 import MyContext from '../configs/MyContext';
 import MyUserReducer from '../reducers/MyUserReducer'; 
+import PostDetails from '../components/Post/PostDetails';
+import Posts from '../components/Post/Posts';
+
+
 
 const homeName = 'Home';
 const favoriteName = 'Favourite';
 const infoUserName = 'InfoUserName';
 const notificationName = 'notificationHome';
+const postDetails = 'PostDetails';
+const posts = 'Posts';
 
 const Tab = createBottomTabNavigator()
 
@@ -61,10 +67,12 @@ const MainContainer = () => {
                     {/* tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray', */}
 
-                    <Tab.Screen name={homeName} component={HomeScreen} />
+                    <Tab.Screen name="Home" component={HomeScreen} />
                     <Tab.Screen name={favoriteName} component={FavoriteScreen} />
                     <Tab.Screen name={notificationName} component={NotificationScreen} />
                     <Tab.Screen name={infoUserName} component={InfoUserScreen} />
+                    <Tab.Screen name="PostDetails" component={PostDetails} options={{ tabBarItemStyle: { display: "none" }}} />
+                    <Tab.Screen name={posts} component={Posts} options={{ tabBarItemStyle: { display: "none" }}} />
 
                 </Tab.Navigator>
 

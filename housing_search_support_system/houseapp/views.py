@@ -1,11 +1,14 @@
 # from django.shortcuts import render
 from cloudinary.auth_token import generate
 from rest_framework import viewsets, generics, parsers, permissions, status
-from houseapp import serializers
+from houseapp import serializers, paginators
 from houseapp import perms
 from houseapp.models import Post, User, Comment, Favourite
 from rest_framework.response import Response
 from rest_framework.decorators import action
+
+from django_filters.rest_framework import DjangoFilterBackend
+from houseapp.filters import PostFilter
 
 
 from rest_framework.views import APIView
@@ -21,7 +24,12 @@ class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAP
     # queryset = Post.objects.all()
     queryset = Post.objects.prefetch_related('media_set').all()
     serializer_class = serializers.PostSerializer
+
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = PostFilter
+
     permission_classes = [permissions.AllowAny()]
+    pagination_class = paginators.PostsPaginator
 
     def get_permissions(self):
         if self.action in ['add_comment', 'favourite']:
@@ -105,7 +113,6 @@ class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateA
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = [perms.OwnerAuthenticated]
-
 
 
 

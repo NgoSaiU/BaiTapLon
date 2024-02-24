@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-a$_(g5hl4pf%%=^k0c(*3jh)$&nan0k2*0#9n5k+3n%7o4h#07
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'ckeditor',
     'ckeditor_uploader',
+    'django_filters'
+
 
 ]
 
@@ -62,6 +65,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'houseapp.User'
 
 import cloudinary
+import cloudinary.api
+import cloudinary.uploader
 
 cloudinary.config(
     cloud_name="du1qx5ncz",
@@ -102,6 +107,7 @@ INTERNAL_IPS = [
 '127.0.0.1'
 ]
 
+CORS_ALLOWED_ORIGINS = ['*']
 
 ROOT_URLCONF = 'housing_search_support_system.urls'
 
@@ -169,7 +175,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+OAUTH2_PROVIDER = {
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
+}
 
 CLIENT_ID = 'GuF4LD714aaohymEjNxv4YUdx6eX83Eq81Te3aOU'
 CLIENT_SECRET = 'gVGbxelyaJEmfQtmzyXI1jJ294B9XeQCMiNkntFS9pMTDWYmcD7dMJqFwKA2bJcLDhcNOVSLm0fSarMlTkCjauFEccUzWJyBUmTzgyRtyVUYQopqGvw2GOYsTpHC0c9a'

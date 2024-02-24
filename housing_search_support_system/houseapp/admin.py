@@ -12,9 +12,14 @@ from cloudinary.forms import CloudinaryFileField
 #     }
 
 admin.site.register(Post)
-admin.site.register(City)
 admin.site.register(Media)
 admin.site.register(User)
 admin.site.register(Comment)
 admin.site.register(Tag)
+
+admin.site.register(Address)
+admin.site.register(Street)
+admin.site.register(Ward)
+admin.site.register(District)
+admin.site.register(City)
 

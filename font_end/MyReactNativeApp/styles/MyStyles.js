@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         flex: 1,
-        margin: 5
+        margin: 5,
+        marginTop: 50,
     }, row: {
         flexDirection: "row"
     }, subject: {

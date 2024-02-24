@@ -1,9 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Style from "../../components/User/Style";
 import API, { authApi, endpoints } from '../../configs/API';
 import MyContext from "../../configs/MyContext";
 import MyStyle from '../../styles/MyStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
+
+const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+)
+
 
 const Login = ({ navigation }) => {
 
@@ -12,82 +21,54 @@ const Login = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
     const [user, dispatch] = useContext(MyContext);
 
-    // const login = () => {
-    //     if (username === 'admin' && password === '123') {
-    //         dispatch({
-    //             type: 'login',
-    //             payload: {
-    //                 "username": 'admin'
-    //             }
-    //         })
-    //     }
-    // }
-
     const login = async () => {
         setLoading(true);
         try {
             let res = await API.post(endpoints['login'], {
+                "grant_type": "password",
                 "username": username,
                 "password": password,
-                "client_id": "HmwZ6eFN7iLeSl3pmqqoilgrRPk4HD1tembFrIat",
-                "client_secret": "8CwdW0dMU4sTYgOnQj20RIzIv8Ch0zsXlvsstT0KHHCgq9xyQmj3WyZMPQF3tTwXrmVMgTSOvxp0fRcY0OuaJ1df10IIMHRLInYrBf4tCOhPAxNEWrRr8p78gglqVDI0",
-                "grant_type": "password"
+                "client_id": "AO9EwM6RY9N0UcfG6yNclWN9SFkLkepy367YpwTI",
+                "client_secret": "GYu5aoYM8AO248x1xRV8oJZXMYJLdwX7zbYA2Sbj2eTGg0WAIg7E8BR9pPLxHwCQSt1WSaklKDzfzNMYRJaJwcbt5LrsdttyyW6SLKUxwCw3iqmYeK7mcei0PpY8eZmW",
             });
-            // let res = await API.post(endpoints['posts']);
             console.info(res.data);
-        } catch (e) {
-            console.error(e);
-            console.info("Lỗi rồi ông ơi")
+
+            await AsyncStorage.setItem("access-token", res.data.access_token)
+            let user = await authApi(res.data.access_token).get(endpoints['current-user']);
+            dispatch({
+                type: "login",
+                payload: user.data
+            });
+            console.info("access_token: " + res.data.access_token)
+            navigation.navigate("Home");
+
+        } catch (ex) {
+            console.error(ex);
+            console.info("loi login");
         } finally {
             setLoading(false);
         }
     }
 
-    // const login = async () => {
-    //     setLoading(true);
-
-    //     try {
-    //         let res = await API.post(endpoints['login'], {
-    //             "username": username,
-    //             "password": password,
-    //             "client_id": "iaL2868ctytxIToJHDkm9S39lCRPa2gJ12j9kaxh",
-    //             "client_secret": "TGMSVnIsFGzoOKB4bg5Fyt65E8C2fQaA0gyuBixSDKRaB9RrhhLdC2Zr6oxnmgdEs1lPF8wYRpJ3xokEabE1pSBNH0JTsFrBqpn58nJ7BcMkw6akEKLh4TTIHOXGcQEx",
-    //             "grant_type": "password"
-    //         });
-
-    //         await AsyncStorage.setItem("access-token", res.data.access_token)
-    // let user = await authApi(res.data.access_token).get(endpoints['current-user']);
-    // dispatch({
-    //     type: "login",
-    //     payload: user.data
-    // });
-    // navigation.navigate("Home");ss
-    //     } catch (ex) {
-    //         console.error(ex);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
     return (
-        <View style={MyStyle.container}>
-            <Text style={MyStyle.subject}>ĐĂNG NHẬP</Text>
-            <TextInput value={username} onChangeText={t => setUsername(t)} style={Style.input} placeholder="Tên đăng nhập..." />
-            <TextInput secureTextEntry={true} value={password} onChangeText={t => setPassword(t)} style={Style.input} placeholder="Mật khẩu..." />
+        <DismissKeyboard>
 
-            {/* <TextInput style={Style.input} placeholder="Tên đăng nhập..." />
-            <TextInput style={Style.input} placeholder="Mật khẩu..." /> */}
 
-            <TouchableOpacity onPress={login}>
-                <Text style={Style.button}>Đăng nhập</Text>
-            </TouchableOpacity>
+            <View style={MyStyle.container}>
+                <Text style={MyStyle.subject}>ĐĂNG NHẬP</Text>
 
-            {/* {loading === true ? <ActivityIndicator /> : <>
-                <TouchableOpacity onPress={login}>
-                    <Text style={Style.button}>Đăng nhập</Text>
-                </TouchableOpacity>
-            </>} */}
-        </View>
-    )
+                <TextInput value={username} onChangeText={t => setUsername(t)} style={Style.input} placeholder="Tên đăng nhập..." />
+                <TextInput secureTextEntry={true} value={password} onChangeText={t => setPassword(t)} style={Style.input} placeholder="Mật khẩu..." />
+
+                {loading === true ? <ActivityIndicator /> : <>
+                    <TouchableOpacity onPress={login}>
+                        <Text style={Style.button}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </>}
+
+            </View>
+        </DismissKeyboard>
+    );
 }
 
 export default Login;

@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField('get_images')
     class Meta:
         model = Post
-        fields = ['title', 'price', 'address', 'numberOfPerson', 'user', 'tags', 'images']
+        fields = ['id', 'title', 'price', 'address', 'numberOfPerson', 'user', 'tags', 'images']
 
     def get_images(self, obj):
         return MediaSerializer(obj.media_set.all(), many=True).data
@@ -45,7 +45,7 @@ class UserSerialzier(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar', 'avatar_url']
+        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'role', 'avatar', 'avatar_url']
         extra_kwargs = {
             'password': {
                 'write_only': True
@@ -73,6 +73,7 @@ class UserSerialzier(serializers.ModelSerializer):
     #     return None
     def create(self, validated_data):
         data = validated_data.copy()
+
         user = User(**data)
         user.set_password(data['password'])
         user.save()
