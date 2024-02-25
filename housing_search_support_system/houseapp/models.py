@@ -1,13 +1,20 @@
 from _ast import Name
+
+from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from cloudinary.models import CloudinaryField
 from ckeditor.fields import RichTextField
+from phone_field import PhoneField
+
+
 # Create your models here.
 
 class User(AbstractUser):
     follow = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='UserFollow')
-
+    phone_number_regex = RegexValidator(regex=r'(0[0-9]{9,10})$',
+                                        message='Please enter correct format phone number, ex: 0987654321')
+    phone_number = models.CharField(max_length=11, validators=[phone_number_regex], null=True, unique=True)
     avatar = CloudinaryField('avatar', null=True)
 
     class Role(models.TextChoices):
@@ -73,6 +80,7 @@ class Post(BaseModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     address = models.CharField(max_length=255, null=False)
     numberOfPerson = models.SmallIntegerField(default=0)
+    acreage = models.DecimalField(max_digits=2, decimal_places=1,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag')
     local = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)

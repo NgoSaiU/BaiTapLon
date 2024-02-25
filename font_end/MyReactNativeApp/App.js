@@ -1,13 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, Keyboard, Text, View } from 'react-native';
 import MainContainer from './navigations/MainContainer'
+import MyContext from './configs/MyContext';
+import MyUserReducer from './reducers/MyUserReducer';
 
 
 
 const App = () => {
+  const [user, dispatch] = useReducer(MyUserReducer, null);
+
   return (
+    <MyContext.Provider value={[user, dispatch]}>
       <MainContainer />
+    </MyContext.Provider>
   );
 }
 

@@ -5,7 +5,7 @@ export const endpoints = {
 
     // 'courses': '/courses/',
     // 'lessons': (courseId) => `/courses/${courseId}/lessons/`,
-    // 'lesson-details': (lessonId) => `/lessons/${lessonId}/`,
+    'post-details': (postId) => `/posts/${postId}/`,
     // 'comments': (lessonId) => `/lessons/${lessonId}/comments/`,
     'login': '/o/token/',
     'current-user': '/users/current-user/',

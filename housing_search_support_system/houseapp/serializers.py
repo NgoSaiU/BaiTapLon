@@ -7,12 +7,17 @@ from rest_framework import serializers
 # làm CURD Post trước
 class PostSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField('get_images')
+    phone = serializers.SerializerMethodField()
     class Meta:
         model = Post
-        fields = ['id', 'title', 'price', 'address', 'numberOfPerson', 'user', 'tags', 'images']
+        fields = ['id', 'title', 'description','price', 'address', 'numberOfPerson', 'created_date', 'user', 'phone', 'acreage', 'tags', 'images']
 
     def get_images(self, obj):
         return MediaSerializer(obj.media_set.all(), many=True).data
+
+    def get_phone(self, obj):
+        # Access the phone number from the related User instance
+        return obj.user.phone_number
 
 class MediaSerializer(serializers.ModelSerializer):
     link = serializers.SerializerMethodField()

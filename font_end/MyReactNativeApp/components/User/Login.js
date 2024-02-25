@@ -40,6 +40,7 @@ const Login = ({ navigation }) => {
                 payload: user.data
             });
             console.info("access_token: " + res.data.access_token)
+            
             navigation.navigate("Home");
 
         } catch (ex) {

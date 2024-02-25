@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'ckeditor',
     'ckeditor_uploader',
-    'django_filters'
+    'django_filters',
+
 
 
 ]
