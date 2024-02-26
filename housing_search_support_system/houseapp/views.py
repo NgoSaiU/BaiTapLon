@@ -64,6 +64,8 @@ class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAP
                         status=status.HTTP_200_OK)
 
 
+
+
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView, generics.ListAPIView):
     queryset = User.objects.filter(is_active=True).all()
     serializer_class = serializers.UserSerialzier
@@ -78,6 +80,8 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
 
         # return self.permission_classes
         return [permissions.AllowAny()]
+
+
     @action(methods=['get'], url_path='current-user', url_name='current-user', detail=False)
     def current_user(self, request):
         return Response(serializers.UserSerialzier(request.user).data)
@@ -127,6 +131,10 @@ class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateA
     permission_classes = [perms.OwnerAuthenticated]
 
 
+# class CustomerViewSet(viewsets.ViewSet, generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = serializers.CustomserSerialzier
+#     parser_classes = [parsers.MultiPartParser]
 
 # class FollowUserView(APIView):
 #     def post(self, request, pk, format=None):

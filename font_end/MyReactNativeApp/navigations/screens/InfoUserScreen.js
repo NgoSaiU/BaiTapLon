@@ -21,6 +21,8 @@ const InfoUserScreen = ({ navigation }) => {
                 {/* <Register/> */}
             </> : <>
                 <Text>Chào {user.username}</Text>
+                <Text>Role {user.role}</Text>
+
             </>}
 
         </View>

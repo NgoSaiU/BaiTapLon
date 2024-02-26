@@ -28,8 +28,8 @@ const Login = ({ navigation }) => {
                 "grant_type": "password",
                 "username": username,
                 "password": password,
-                "client_id": "AO9EwM6RY9N0UcfG6yNclWN9SFkLkepy367YpwTI",
-                "client_secret": "GYu5aoYM8AO248x1xRV8oJZXMYJLdwX7zbYA2Sbj2eTGg0WAIg7E8BR9pPLxHwCQSt1WSaklKDzfzNMYRJaJwcbt5LrsdttyyW6SLKUxwCw3iqmYeK7mcei0PpY8eZmW",
+                "client_id": "Eewq64ohfgpLRWDh1pZzxueTUma6kp5HY9XBi8bJ",
+                "client_secret": "AtOaA532oktZXWhcd01As0hq5onItVFXgULf3OUVobWHVwz4202Hc8ZP1hNyiF7c8VXd2VGrSe2CrWalo6amwY3NM7fHNlbTM9irJOc5s5NBZ2kEkxbkSDkFSXpPRJPd",
             });
             console.info(res.data);
 

@@ -104,6 +104,7 @@ class Comment(ContentModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reply = models.ManyToManyField('self', symmetrical=False, related_name='ReplyComment', blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post')
+
 class Media(models.Model): #
     link = CloudinaryField('link', null=True)
     # avatar = CloudinaryField('avatar', null=True)
