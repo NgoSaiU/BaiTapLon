@@ -2,15 +2,13 @@ import axios from "axios";
 
 export const endpoints = {
     'posts': '/posts/',
-
-    // 'courses': '/courses/',
-    // 'lessons': (courseId) => `/courses/${courseId}/lessons/`,
     'post-details': (postId) => `/posts/${postId}/`,
-    // 'comments': (lessonId) => `/lessons/${lessonId}/comments/`,
+    'comments': (postId) => `/posts/${postId}/comment/`,
+    'add-comment': (postId) => `/posts/${postId}/comments/`,
     'login': '/o/token/',
     'current-user': '/users/current-user/',
     'register': '/users/',
-    // 'add-comment': (lessonId) => `/lessons/${lessonId}/comments/`
+
 }
 
 export const authApi = (accessToken) => axios.create({

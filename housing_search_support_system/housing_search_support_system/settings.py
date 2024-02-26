@@ -53,8 +53,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_filters',
 
-
-
 ]
 
 REST_FRAMEWORK = {
@@ -182,4 +180,5 @@ OAUTH2_PROVIDER = {
 
 CLIENT_ID = 'GuF4LD714aaohymEjNxv4YUdx6eX83Eq81Te3aOU'
 CLIENT_SECRET = 'gVGbxelyaJEmfQtmzyXI1jJ294B9XeQCMiNkntFS9pMTDWYmcD7dMJqFwKA2bJcLDhcNOVSLm0fSarMlTkCjauFEccUzWJyBUmTzgyRtyVUYQopqGvw2GOYsTpHC0c9a'
+
 

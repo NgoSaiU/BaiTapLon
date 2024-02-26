@@ -42,6 +42,7 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginTop: 50,
+        marginLeft: 20,
     }, imageDetails: {
         width: 350,
         borderRadius: 15,
@@ -58,6 +59,28 @@ export default StyleSheet.create({
         fontSize: 14,
     }, locationDetails: {
         fontSize: 14,
+    }, row: {
+        flexDirection: "row",
+    }, comment: {
+        width: 300,
+        backgroundColor: "lightgray",
+        padding: 5
+    }, imageUser: {
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        margin: 6
+    }, ml_6: {
+        margin: 6
+    }, description: {
+        height: 150,
+        width: 150,
+    }, button: {
+        textAlign: "center",
+        backgroundColor: "darkblue",
+        color: "white",
+        padding: 10
     }
+
 
 })

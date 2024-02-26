@@ -11,7 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['id', 'title', 'description','price', 'address', 'numberOfPerson', 'created_date', 'user', 'phone', 'acreage', 'tags', 'images']
-
+        # fields = ['id', 'title']
     def get_images(self, obj):
         return MediaSerializer(obj.media_set.all(), many=True).data
 
@@ -50,7 +50,7 @@ class UserSerialzier(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'role', 'avatar', 'avatar_url']
+        fields = ['id','first_name', 'last_name', 'username', 'password', 'email', 'role', 'avatar', 'avatar_url']
         extra_kwargs = {
             'password': {
                 'write_only': True
@@ -103,6 +103,7 @@ class UserFollowSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerialzier()
     class Meta:
         model = Comment
         fields = ['id', 'content', 'user']

@@ -17,6 +17,13 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=11, validators=[phone_number_regex], null=True, unique=True)
     avatar = CloudinaryField('avatar', null=True)
 
+    # def save(self, validated_data):
+    #     data = validated_data.copy()
+    #     user = User(**data)
+    #     user.set_password(data['password'])
+    #     user.save()
+    #     return user
+
     class Role(models.TextChoices):
         ADMIN = "ADMIN", 'Admin'
         CUSTOMER = "CUSTOMER", 'Customer'
@@ -25,10 +32,10 @@ class User(AbstractUser):
     base_role = Role.CUSTOMER
     role = models.CharField(max_length=50, choices=Role.choices, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.role = self.base_role
-            return super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         self.role = self.base_role
+    #         return super().save(*args, **kwargs)
 
 class CustomerManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
@@ -80,7 +87,7 @@ class Post(BaseModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     address = models.CharField(max_length=255, null=False)
     numberOfPerson = models.SmallIntegerField(default=0)
-    acreage = models.DecimalField(max_digits=2, decimal_places=1,null=True)
+    acreage = models.DecimalField(max_digits=3, decimal_places=1,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag')
     local = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)

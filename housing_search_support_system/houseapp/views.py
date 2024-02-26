@@ -21,21 +21,32 @@ from django.shortcuts import get_object_or_404
 # viewsets.ModelViewSet là sẽ ra 6 API
 class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAPIView,
                   generics.ListAPIView, generics.CreateAPIView, generics.UpdateAPIView):
-    # queryset = Post.objects.all()
+
     queryset = Post.objects.prefetch_related('media_set').all()
     serializer_class = serializers.PostSerializer
 
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PostFilter
 
-    permission_classes = [permissions.AllowAny()]
+    permission_classes = [permissions.AllowAny()] #có ngoặc
+    # permission_classes = [perms.OwnerAuthenticated]
     pagination_class = paginators.PostsPaginator
 
     def get_permissions(self):
+        if self.action in ['get_comment']:
+            return [permissions.AllowAny()]
+        # if self.action == 'create':  # Kiểm tra action của viewset
+        #     return [permissions.IsAuthenticated()]
         if self.action in ['add_comment', 'favourite']:
             return [permissions.IsAuthenticated()]
-
         return self.permission_classes
+
+    @action(methods=['get'], url_path='comment', detail=True)
+    def get_comment(self, request, pk):
+        post = self.get_object()
+        comments = Comment.objects.filter(post=post)
+        serializer = serializers.CommentSerializer(comments, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], url_path='comments', detail=True)
     def add_comment(self, request, pk):
@@ -56,6 +67,7 @@ class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAP
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView, generics.ListAPIView):
     queryset = User.objects.filter(is_active=True).all()
     serializer_class = serializers.UserSerialzier
+
     parser_classes = [parsers.MultiPartParser]
 
     def get_permissions(self):
@@ -109,11 +121,10 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateAPIView):
+class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateAPIView, generics.ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = [perms.OwnerAuthenticated]
-
 
 
 
