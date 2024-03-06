@@ -51,10 +51,12 @@ const Login = ({ navigation }) => {
         }
     }
 
+    const register = () => {
+        navigation.navigate("Register");
+    }
+
     return (
         <DismissKeyboard>
-
-
             <View style={MyStyle.container}>
                 <Text style={MyStyle.subject}>ĐĂNG NHẬP</Text>
 
@@ -66,7 +68,10 @@ const Login = ({ navigation }) => {
                         <Text style={Style.button}>Đăng nhập</Text>
                     </TouchableOpacity>
                 </>}
-
+                <Text style={{fontSize:15}}>Bạn chưa có tài khoản?</Text>
+                <TouchableOpacity onPress={register}>
+                    <Text style={Style.button}>Đăng ký</Text>
+                </TouchableOpacity>
             </View>
         </DismissKeyboard>
     );

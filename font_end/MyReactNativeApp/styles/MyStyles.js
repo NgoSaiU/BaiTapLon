@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
+import colors from "../share/colors";
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         margin: 5,
         marginTop: 50,
+        
     }, row: {
         flexDirection: "row"
     }, subject: {
@@ -18,5 +20,10 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         color: "green"
+    },buttonAddPost:{
+        backgroundColor: colors.WHITEBLUE,
+        fontSize: 20,
+        justifyContent: "center",
+        alignItems: "center",
     }
 });

@@ -74,7 +74,7 @@ export default StyleSheet.create({
         margin: 6
     }, description: {
         height: 150,
-        width: 150,
+        width: 300,
     }, button: {
         textAlign: "center",
         backgroundColor: "darkblue",

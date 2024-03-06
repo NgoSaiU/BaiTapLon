@@ -1,4 +1,5 @@
 import axios from "axios";
+const BASE_URL = "http://10.0.2.2:8000"
 
 export const endpoints = {
     'posts': '/posts/',
@@ -9,11 +10,13 @@ export const endpoints = {
     'current-user': '/users/current-user/',
     'register': '/users/',
 
+    'favourite-post': (userId) => `/posts/${userId}/favourite/`,
+    'posts-favourite': (postId) => `/posts/${postId}/post-favourite/`,
 }
 
 export const authApi = (accessToken) => axios.create({
     // baseURL: "https://ngosaiustudent.pythonanywhere.com",
-    baseURL: "http://10.0.2.2:8000",
+    baseURL: BASE_URL,
     headers: {
         "Authorization": `bearer ${accessToken}`
     }
@@ -21,7 +24,7 @@ export const authApi = (accessToken) => axios.create({
 
 export default axios.create({
     // baseURL: "https://ngosaiustudent.pythonanywhere.com"
-    baseURL: "http://10.0.2.2:8000",
+    baseURL: BASE_URL,
 
 })
 

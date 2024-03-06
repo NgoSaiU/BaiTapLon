@@ -19,6 +19,7 @@ import PostDetails from '../components/Post/PostDetails';
 import Posts from '../components/Post/Posts';
 import Management from './screens/Management';
 import PostWantHire from './screens/PostWantHire';
+import Register from '../components/User/Register';
 
 
 const homeName = 'Home';
@@ -80,10 +81,13 @@ const MainContainer = () => {
                         <Tab.Screen name={infoUserName} component={InfoUserScreen} />
                         <Tab.Screen name="PostDetails" component={PostDetails} options={{ tabBarItemStyle: { display: "none" } }} />
                         <Tab.Screen name={posts} component={Posts} options={{ tabBarItemStyle: { display: "none" } }} />
+                        
+                        <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: "none" } }} />
                     </>
                 ) : (user.role === 'LANDLORD' ? (
                     <>
                         <Tab.Screen name="Home" component={HomeScreen} />
+                            <Tab.Screen name="PostDetails" component={PostDetails} options={{ tabBarItemStyle: { display: "none" } }} />
                         <Tab.Screen name={management} component={Management} />
                         <Tab.Screen name={postWantHire} component={PostWantHire} />
                         <Tab.Screen name={infoUserName} component={InfoUserScreen} />

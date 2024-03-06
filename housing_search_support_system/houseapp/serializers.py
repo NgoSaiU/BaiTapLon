@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 
 from cloudinary import config
-from houseapp.models import User, Post, Comment, Tag, Media
+from houseapp.models import User, Post, Comment, Tag, Media, Favourite
 from rest_framework import serializers
 
 # làm CURD Post trước
@@ -38,6 +38,7 @@ class FavouritePostSerializer(PostSerializer):
         request = self.context.get('request')
         if request.user.is_authenticated:
             return post.favourite_set.filter(active=True).exists()
+
 
     # class Meta:
     #     model = PostSerializer.Meta.model
@@ -83,6 +84,13 @@ class UserSerialzier(serializers.ModelSerializer):
         user.set_password(data['password'])
         user.save()
         return user
+
+# class FavouriteSerializer(serializers.ModelSerializer):
+#     post = PostSerializer()
+#
+#     class Meta:
+#         model = Favourite
+#         fields = ('id', 'post', 'active')
 
 class UserFollowSerializer(UserSerialzier):
     class Meta:

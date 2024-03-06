@@ -63,7 +63,21 @@ class PostViewSet(viewsets.ViewSet, generics.RetrieveAPIView, generics.DestroyAP
         return Response(serializers.FavouritePostSerializer(self.get_object(), context={'request': request}).data,
                         status=status.HTTP_200_OK)
 
+    # lấy bài post mà user đã favourite
+    @action(methods=['get'], url_path='post-favourite', detail=True)
+    def get_post_favourite(self, request, pk):
+        user_id = pk
+        user = get_object_or_404(User, pk=user_id)
+        favourite_posts = user.favourite_set.filter(active=True).values_list('post', flat=True)
+        posts = Post.objects.filter(id__in=favourite_posts)
 
+        paginator = paginators.PostsPaginator()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = serializers.PostSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+        # serializer = serializers.PostSerializer(posts, many=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView, generics.ListAPIView):
@@ -130,6 +144,16 @@ class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateA
     serializer_class = serializers.CommentSerializer
     permission_classes = [perms.OwnerAuthenticated]
 
+
+# class FavouriteListAPIView(viewsets.ListAPIView):
+#     queryset = Favourite.objects.filter(active=True)
+#     serializer_class = serializers.FavouriteSerializer
+#
+#     # Lọc theo user
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+#         user_id = self.kwargs['pk']
+#         return queryset.filter(user_id=user_id)
 
 # class CustomerViewSet(viewsets.ViewSet, generics.CreateAPIView):
 #     queryset = User.objects.all()

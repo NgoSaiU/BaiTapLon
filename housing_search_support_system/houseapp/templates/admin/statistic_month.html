@@ -1,7 +1,7 @@
 {% extends 'admin/base_site.html' %}
 
 {% block content %}
-<h1>THÔNG KÊ KHÓA HỌC TRỰC TUYẾN</h1>
+<h1>THÔNG KÊ NGƯỜI DÙNG THEO THÁNG</h1>
     {{stats}}
     {% for month, data in stats.items %}
         <h3>Tháng {{ month }}: </h3>
@@ -14,13 +14,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
 <script>
     let valuesAdmin = [''];
     let valuesCustomer = [''];
     let valuesLandlord = [''];
-    let zero = 0;
+    let zero = [''];
 
     let labelss = [];
+
     {% for month, data in stats.items %}
         labelss.push({{month}})
          {% for entry in data %}
@@ -35,11 +37,10 @@
                 valuesCustomer.push(zero)
                 valuesLandlord.push(zero)
             {% endif %}
-<!--            valuesAdmin.push(zero)-->
-<!--            valuesCustomer.push(zero)-->
-<!--            valuesLandlord.push(zero)-->
+
         {% endfor %}
     {% endfor %}
+
     console.info(valuesCustomer)
 
 var userData = {

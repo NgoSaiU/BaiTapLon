@@ -5,6 +5,7 @@ import Login from '../../components/User/Login'
 import MyUserReducer from "../../reducers/MyUserReducer";
 import Register from "../../components/User/Register";
 import MyContext from "../../configs/MyContext";
+import Logout from "../../components/User/Logout";
 
 const InfoUserScreen = ({ navigation }) => {
     // const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -18,10 +19,11 @@ const InfoUserScreen = ({ navigation }) => {
                 {/* <Text> Usser is: {user.username}</Text> */}
                 <Login navigation={navigation} />
                 
-                {/* <Register/> */}
+                {/* <Register navigation={navigation}/> */}
             </> : <>
                 <Text>Chào {user.username}</Text>
                 <Text>Role {user.role}</Text>
+                <Logout/>
 
             </>}
 

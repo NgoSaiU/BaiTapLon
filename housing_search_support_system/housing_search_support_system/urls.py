@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import debug_toolbar
-# from django.contrib import admin
+from django.contrib import admin
 from django.urls import path, re_path, include
 from houseapp.admin import admin_site
 
@@ -35,15 +35,19 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+
 urlpatterns = [
     path('', include('houseapp.urls')),
 
-    path('admin/', admin_site.urls),
+    path('admin/', admin.site.urls),
+    path('houseapp/', admin_site.urls),
 
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
 
     path('__debug__/', include(debug_toolbar.urls)),
+
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
 
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 

@@ -37,6 +37,11 @@ pymysql.install_as_MySQLdb()
 
 
 INSTALLED_APPS = [
+    'django_light',
+    'admin_tools_stats',
+    'django_nvd3',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +57,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'django_filters',
+
+
 
 ]
 

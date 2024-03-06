@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 
 router.register('posts', views.PostViewSet, basename='posts')
 router.register('users', views.UserViewSet, basename='users')
+# router.register('favourites', views.FavouriteListAPIView, basename='favourites')
 # router.register('customers', views.CustomerViewSet, basename='customers')
 router.register('comment', views.CommentViewSet, basename='comment')
 

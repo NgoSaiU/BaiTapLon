@@ -10,8 +10,6 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         const loadPosts = async () => {
-            // const url = "https://ngosaiustudent.pythonanywhere.com/posts/"
-
             let url = endpoints['posts'];
             try {
                 let res = await API.get(url);

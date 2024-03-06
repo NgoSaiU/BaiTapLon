@@ -2,29 +2,33 @@ from django.contrib import admin
 from .models import Post, Comment, Tag, City, District, Ward, Street, Address, Media, User
 from django.urls import path
 from django.template.response import TemplateResponse
+
+from django.contrib.auth.models import Group
+
 from houseapp import dao
-
-# admin_site = CourseAppAdminSite(name='myapp')
-# Register your models here.
-from cloudinary.forms import CloudinaryFileField
-
-# class MyModelAdmin(admin.ModelAdmin):
-#     formfield_overrides = {
-#         models.ImageField: {'widget': CloudinaryFileField},
-#     }
 
 
 class CourseAppAdminSite(admin.AdminSite):
     site_header = 'Hệ thống nhà trọ'
     def get_urls(self):
         return [
-                   path('course-stats/', self.stats_view)
-               ] + super().get_urls()
-
-    def stats_view(self, request):
-        return TemplateResponse(request, 'admin/static.html',{
+           path('month-statistic/', self.statistic_month),
+           path('quarter-statistic/', self.statistic_quarter),
+           path('year-statistic/', self.statistic_year),
+       ] + super().get_urls()
+    def statistic_month(self, request):
+        return TemplateResponse(request, 'admin/statistic_month.html',{
             'stats': dao.count_user_by_month(2024)
         })
+    def statistic_quarter(self, request):
+        return TemplateResponse(request, 'admin/statistic_quarter.html',{
+            'stats': dao.count_user_by_quarter(2024, 2025)
+        })
+    def statistic_year(self, request):
+        return TemplateResponse(request, 'admin/statistic_year.html',{
+            'stats': dao.count_user_by_year(2024, 2025)
+        })
+
 
 admin_site = CourseAppAdminSite(name='myapp')
 
@@ -39,4 +43,9 @@ admin_site.register(Street)
 admin_site.register(Ward)
 admin_site.register(District)
 admin_site.register(City)
+
+
+admin.site.unregister(Group)
+
+
 

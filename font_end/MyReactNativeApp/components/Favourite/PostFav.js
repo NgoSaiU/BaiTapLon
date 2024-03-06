@@ -6,7 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import moment from "moment";
 
 
-const Posts = ({ posts, navigation }) => {
+const PostFav = ({ postFavourite, navigation }) => {
 
     const goToPostDetails = (postId) => {
         navigation.navigate("PostDetails", { "postId": postId })
@@ -15,21 +15,21 @@ const Posts = ({ posts, navigation }) => {
     return (
         <View style={Style.contain}>
             <View>
-                <TouchableOpacity onPress={() => goToPostDetails(posts.id)}>
-                    {posts.images.length > 0 && (
-                        <Image source={{ uri: posts.images[0].link }} style={Style.imgageItem} />
+                <TouchableOpacity onPress={() => goToPostDetails(postFavourite.id)}>
+                    {postFavourite.images.length > 0 && (
+                        <Image source={{ uri: postFavourite.images[0].link }} style={Style.imgageItem} />
                     )}
-                    
+                    {/* <Text>LEFT</Text> */}
                 </TouchableOpacity>
             </View>
 
-            <View style={{marginLeft:15}}>
-                <TouchableOpacity onPress={() => goToPostDetails(posts.id)}>
-                    <Text style={Style.title}>{posts.title}</Text>
-                    <Text style={Style.salary}>{posts.price}</Text>
-                    <Text style={Style.location}>{posts.address}</Text>
+            <View style={{ marginLeft: 15 }}>
+                <TouchableOpacity onPress={() => goToPostDetails(postFavourite.id)}>
+                    <Text style={Style.title}>{postFavourite.title}</Text>
+                    <Text style={Style.salary}>{postFavourite.price}</Text>
+                    <Text style={Style.location}>{postFavourite.address}</Text>
                     <View style={{ display: 'flex', flexDirection: 'row' }} >
-                        <Text style={Style.created_date}>{moment(posts.created_date).fromNow()}</Text>
+                        <Text style={Style.created_date}>{moment(postFavourite.created_date).fromNow()}</Text>
                         <Octicons name="heart" size={20} style={[Style.heart]} />
                         {/* <Entypo name="heart" size={20} style={[Style.heart]} /> */}
                     </View>
@@ -39,4 +39,4 @@ const Posts = ({ posts, navigation }) => {
         </View>
     )
 }
-export default Posts;
+export default PostFav;

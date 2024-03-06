@@ -28,11 +28,14 @@ def count_user_by_month(year):
     # return Category.objects.annotate(count=Count('courses__id')).values("id", "name", "count").order_by('-count')
 
 #  Theo năm
-def count_Customer_by_year():
-
-    pass
+def count_user_by_year(FromYear, ToYear):
+    result = {}
+    for year in range(FromYear, ToYear):
+        users_by_year = User.objects.filter(date_joined__year=year).values('role','date_joined__month').annotate(total=Count('id'))
+        result[year] = list(users_by_year)
+    return result
 #  Theo quý
-def count_Customer_by_quarterly():
+def count_user_by_quarter(year):
 
     pass
 

@@ -24,5 +24,11 @@ export default StyleSheet.create({
         width: 80,
         height: 80,
         margin: 5
+    }, containerRegis: {
+        flex: 1,
+        margin: 5,
+        marginTop: 50,
+        // justifyContent: 'center',
+        alignItems: 'center',
     }
 })

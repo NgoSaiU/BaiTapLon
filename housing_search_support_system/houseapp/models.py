@@ -32,10 +32,10 @@ class User(AbstractUser):
     base_role = Role.CUSTOMER
     role = models.CharField(max_length=50, choices=Role.choices, blank=True)
 
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         self.role = self.base_role
-    #         return super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.role:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
 
 class CustomerManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
@@ -140,6 +140,11 @@ class User_PostMotel(BaseModel):
     class Meta:
         abstract = True
 
+class Favourite(User_PostMotel):
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('user', 'post')
 
 
 # class RoomChat(User_PostMotel):
@@ -152,11 +157,6 @@ class User_PostMotel(BaseModel):
 # class Rating(User_PostMotel):
 #     pass
 
-class Favourite(User_PostMotel):
-    active = models.BooleanField(default=True)
-
-    class Meta:
-        unique_together = ('user', 'post')
 
 
 
